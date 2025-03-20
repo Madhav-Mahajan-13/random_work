@@ -1,0 +1,6 @@
+.patient-list {
+    padding: 0;
+    overflow-y: auto;
+    height: calc(100% - 122px);
+    background-color: #ffffff;
+  }

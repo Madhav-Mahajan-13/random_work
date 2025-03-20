@@ -1,0 +1,13 @@
+.search-bar {
+    background-color: #ffffff;
+    border-radius: 20px;
+  }
+  
+  .search-input {
+    border-radius: 20px;
+    font-size: 14px;
+  }
+  
+  .MuiOutlinedInput-root {
+    border-radius: 20px;
+  }

@@ -1,0 +1,33 @@
+.dropdown-container {
+    min-width: 80px;
+    width: 80px;
+  }
+  
+  .dropdown-form-control {
+    width: 100%;
+  }
+  
+  .dropdown-select {
+    background-color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 0 10px;
+    height: 40px;
+  }
+  
+  .dropdown-select .MuiSelect-select {
+    padding: 8px 14px 8px 14px;
+  }
+  
+  .dropdown-menu-paper {
+    margin-top: 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dropdown-menu-item {
+    font-size: 14px;
+    padding: 8px 16px;
+    min-height: 36px;
+  }
