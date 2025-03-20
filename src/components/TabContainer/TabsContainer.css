@@ -1,0 +1,23 @@
+.tabs-container {
+    background-color: #f5f5f5;
+  }
+  
+  .tabs {
+    background-color: #f5f5f5;
+  }
+  
+  .tab {
+    font-weight: 500;
+    text-transform: none;
+    color: #616161;
+    min-height: 48px;
+  }
+  
+  .active-tab {
+    background-color: #1a237e;
+    color: white;
+  }
+  
+  .MuiTabs-indicator {
+    display: none;
+  }
