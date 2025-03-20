@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Box, CssBaseline } from '@mui/material';
 import Header from './components/Header/Header';
@@ -116,6 +116,30 @@ function App() {
   const [searchText, setSearchText] = useState('');
   const [category, setCategory] = useState('RPM');
   const [messageText, setMessageText] = useState('');
+  const [timer, setTimer] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+
+  // Calculate the total number of unread messages for the In-App counter
+  const inAppUnreadCount = patients.reduce((total, patient) => 
+    total + (patient.unread || 0), 0);
+
+  // Timer effect
+  useEffect(() => {
+    let interval;
+    if (timerRunning) {
+      interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timerRunning]);
+
+  // Format time as MM:SS
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -123,6 +147,9 @@ function App() {
 
   const handlePatientSelect = (patient) => {
     setSelectedPatient(patient);
+    if (!timerRunning) {
+      setTimerRunning(true);
+    }
   };
 
   const handleSearchChange = (event) => {
@@ -149,8 +176,12 @@ function App() {
       <CssBaseline />
       <Box className="app-container">
         <Box className="sidebar">
-          <Header title="Messages" timer="0 Sec" />
-          <TabsContainer activeTab={activeTab} handleTabChange={handleTabChange} />
+          <Header title="Messages" timer={timerRunning ? formatTime(timer) : "0 Sec"} />
+          <TabsContainer 
+            activeTab={activeTab} 
+            handleTabChange={handleTabChange}
+            inAppCount={inAppUnreadCount}
+          />
           <Box className="search-container">
             <SearchBar value={searchText} onChange={handleSearchChange} />
             <DropdownMenu value={category} onChange={handleCategoryChange} options={['RPM', 'CCM', 'PCM', 'RTM', 'TCM', 'MTM']} />
