@@ -16,7 +16,7 @@ const SearchBar = ({ value, onChange }) => {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon color="action" />
+            <SearchIcon color="action" fontSize="small" />
           </InputAdornment>
         ),
         className: "search-input"

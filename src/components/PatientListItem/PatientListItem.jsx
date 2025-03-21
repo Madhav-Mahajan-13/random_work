@@ -17,7 +17,7 @@ const PatientListItem = ({ patient, isSelected, onClick }) => {
           <Avatar src={defaultAvatar} alt={patient.name} className="patient-avatar" />
         ) : (
           <Avatar className="patient-avatar">
-            <PersonIcon />
+            <img src="https://prtlimages.healtharc.io/images/icons/demo-profile.svg" alt="" width={"50px"} />
           </Avatar>
         )}
       </ListItemAvatar>

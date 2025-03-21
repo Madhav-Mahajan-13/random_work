@@ -6,10 +6,9 @@ import TabsContainer from './components/TabsContainer/TabsContainer';
 import SearchBar from './components/SearchBar/SearchBar';
 import DropdownMenu from './components/DropdownMenu/DropdownMenu';
 import PatientList from './components/PatientList/PatientList';
-import ConversationHeader from './components/ConversationHeader/ConversationHeader';
-import ConversationArea from './components/ConversationArea/ConversationArea';
-import MessageInput from './components/MessageInput/MessageInput';
+
 import './App.css';
+import Animation from './components/LoadingAnimation/Animation';
 
 // Sample patient data
 const patients = [
@@ -192,8 +191,12 @@ function App() {
             onSelectPatient={handlePatientSelect}
           />
         </Box>
+
+            <Box className="main-content" >
+              <Animation/>
+            </Box>
         
-        <Box className="main-content">
+        {/* <Box className="main-content">
           {selectedPatient ? (
             <>
               <ConversationHeader patient={selectedPatient} />
@@ -209,7 +212,7 @@ function App() {
               Please select your patient to start chatting.
             </Box>
           )}
-        </Box>
+        </Box> */}
       </Box>
     </ThemeProvider>
   );

@@ -1,13 +1,23 @@
 .search-bar {
-    background-color: #ffffff;
-    border-radius: 20px;
-  }
-  
-  .search-input {
-    border-radius: 20px;
-    font-size: 14px;
-  }
-  
-  .MuiOutlinedInput-root {
-    border-radius: 20px;
-  }
+  background-color: #ffffff;
+}
+
+.search-input {
+  border-radius: 100px !important;
+  font-size: 14px;
+  background-color: #ffffff;
+  height: 38px;
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 100px;
+  background-color: #ffffff;
+}
+
+.MuiOutlinedInput-input {
+  padding: 8px 4px 8px 0 !important;
+}
+
+.MuiInputAdornment-root {
+  margin-right: 0;
+}
