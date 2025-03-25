@@ -6,62 +6,91 @@ import TabsContainer from './components/TabsContainer/TabsContainer';
 import SearchBar from './components/SearchBar/SearchBar';
 import DropdownMenu from './components/DropdownMenu/DropdownMenu';
 import PatientList from './components/PatientList/PatientList';
+import ConversationHeader from "./components/ConversationHeader/ConversationHeader";
+import ConversationArea from './components/ConversationArea/ConversationArea';
+import MessageInput from './components/MessageInput/MessageInput';
+import LoadingAnimation from './components/LoadingAnimation/LoadingAnimation';
 
 import './App.css';
-import Animation from './components/LoadingAnimation/Animation';
 
-// Sample patient data
-const patients = [
+// Sample patient data for In-App messages
+const inAppPatients = [
   { 
     id: 1, 
-    name: 'Katrine Reichert', 
-    avatar: 'https://statics.teams.cdn.office.net/evergreen-assets/avatars/default-avatar.png', 
-    info: 'https://statics.teams.cdn.office.net/evergreen-assets/safelinks/1/atp-safelinks.html',
-    dob: 'Dec 12, 1994',
-    timestamp: '22:37'
+    name: 'Lucilla Clayton', 
+    avatar: null, 
+    info: 'What is your pain level today?',
+    timestamp: 'Mar 20, 2025',
+    dob: 'Dec 12, 1993',
+    unread: 0
   },
   { 
     id: 2, 
-    name: 'Marie Charles', 
+    name: 'Lauretta Spencer', 
     avatar: null, 
-    info: 'test test',
-    timestamp: '13:03',
-    unread: 2
+    info: 'What is your pain level today?',
+    timestamp: 'Mar 20, 2025',
+    unread: 0
   },
   { 
     id: 3, 
-    name: 'Cicero Von', 
+    name: 'Garry Yoshiko', 
     avatar: null, 
-    info: '',
-    timestamp: '00:22'
+    info: 'Do you have difficulty breathing?',
+    timestamp: 'Mar 20, 2025',
+    unread: 1
   },
   { 
     id: 4, 
-    name: 'Madeline Stamm', 
+    name: 'Oswaldo H Elmo', 
     avatar: null, 
-    info: '',
-    timestamp: '00:22'
+    info: 'What is your pain level today?',
+    timestamp: 'Mar 20, 2025',
+    unread: 0
   },
   { 
     id: 5, 
-    name: 'Lenora Haley', 
+    name: 'Chas Booker', 
     avatar: null, 
-    info: '',
-    timestamp: '00:22'
+    info: 'Do you have any Fatigue today?',
+    timestamp: 'Mar 20, 2025',
+    unread: 0
   },
   { 
     id: 6, 
-    name: 'Desmond Hermann', 
+    name: 'Latanya Aurelio', 
     avatar: null, 
-    info: '',
-    timestamp: '00:22'
+    info: 'Have you used your medication today?',
+    timestamp: 'Mar 20, 2025',
+    unread: 2
+  }
+];
+
+// Sample patient data for SMS messages
+const smsPatients = [
+  { 
+    id: 1, 
+    name: 'Jeanette Miller', 
+    avatar: null, 
+    info: `'I've scheduled your appointment for Friday'`,
+    timestamp: 'Mar 20, 2025',
+    unread: 1
   },
   { 
-    id: 7, 
-    name: 'Andy Joe', 
-    avatar: 'https://statics.teams.cdn.office.net/evergreen-assets/avatars/colored-avatar.png', 
-    info: '',
-    timestamp: '00:22'
+    id: 2, 
+    name: 'Samuel Parker', 
+    avatar: null, 
+    info: 'Please confirm your appointment',
+    timestamp: 'Mar 20, 2025',
+    unread: 0
+  },
+  { 
+    id: 3, 
+    name: 'Victoria Reed', 
+    avatar: null, 
+    info: 'Your prescription is ready for pickup',
+    timestamp: 'Mar 19, 2025',
+    unread: 0
   }
 ];
 
@@ -69,30 +98,38 @@ const patients = [
 const messages = [
   {
     id: 1,
-    sender: 'Katrine Reichert',
-    content: 'Hello',
-    timestamp: '2 weeks ago'
+    role: 'Care Coordinator',
+    content: 'What is your pain level? (Please answer on a scale of 0 to 10, where 0-2 is "No Pain", 3-7 is "Trouble" and 8-10 is "Unable To Move.")',
+    timestamp: '09:05 am'
   },
   {
     id: 2,
-    sender: 'Katrine Reichert',
-    content: '123',
-    timestamp: '2 weeks ago'
+    dateDivider: 'Mar 14,2025',
+    role: 'Care Coordinator',
+    content: 'Hi Lucilla, we are from Dev4 Hospital!',
+    timestamp: '09:05 am'
   },
   {
     id: 3,
-    sender: 'Katrine Reichert',
-    content: 'https://statics.teams.cdn.office.net/evergreen-assets/safelinks/1/atp-safelinks.html',
-    timestamp: '2 weeks ago',
-    isLink: true
+    role: 'Care Coordinator',
+    content: 'What is your pain level? (Please answer on a scale of 0 to 10, where 0-2 is "No Pain", 3-7 is "Trouble" and 8-10 is "Unable To Move.")',
+    timestamp: '09:05 am'
   },
   {
     id: 4,
-    sender: 'Katrine Reichert',
-    content: 'https://statics.teams.cdn.office.net/evergreen-assets/safelinks/1/atp-safelinks.html',
-    timestamp: '2 weeks ago',
-    isLink: true
-  }
+    dateDivider: 'Mar 15,2025',
+    role: 'Care Coordinator',
+    content: 'sgjagbvjigavvavhvjkbsl',
+    timestamp: ''
+  },
+  {
+    id: 5,
+    dateDivider: 'Mar 15,2025',
+    role: 'Care Coordinator',
+    content: 'sgjagbvjigavvavhvjkbsl',
+    timestamp: ''
+  },
+  
 ];
 
 const theme = createTheme({
@@ -111,15 +148,30 @@ const theme = createTheme({
 
 function App() {
   const [activeTab, setActiveTab] = useState(0);
-  const [selectedPatient, setSelectedPatient] = useState(patients[0]);
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [category, setCategory] = useState('RPM');
   const [messageText, setMessageText] = useState('');
   const [timer, setTimer] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [currentPatients, setCurrentPatients] = useState([]);
+
+  // Simulate loading data
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      setCurrentPatients(activeTab === 0 ? inAppPatients : smsPatients);
+      setLoading(false);
+    };
+    
+    loadData();
+  }, [activeTab]);
 
   // Calculate the total number of unread messages for the In-App counter
-  const inAppUnreadCount = patients.reduce((total, patient) => 
+  const inAppUnreadCount = inAppPatients.reduce((total, patient) => 
     total + (patient.unread || 0), 0);
 
   // Timer effect
@@ -142,13 +194,19 @@ function App() {
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
+    setSelectedPatient(null);
+    setTimer(0);
+    setTimerRunning(false);
   };
 
   const handlePatientSelect = (patient) => {
-    setSelectedPatient(patient);
-    if (!timerRunning) {
-      setTimerRunning(true);
+    // Reset timer when selecting a new patient
+    if (selectedPatient?.id !== patient.id) {
+      setTimer(0);
     }
+    
+    setSelectedPatient(patient);
+    setTimerRunning(true);
   };
 
   const handleSearchChange = (event) => {
@@ -185,18 +243,19 @@ function App() {
             <SearchBar value={searchText} onChange={handleSearchChange} />
             <DropdownMenu value={category} onChange={handleCategoryChange} options={['RPM', 'CCM', 'PCM', 'RTM', 'TCM', 'MTM']} />
           </Box>
-          <PatientList 
-            patients={patients} 
-            selectedPatient={selectedPatient} 
-            onSelectPatient={handlePatientSelect}
-          />
+          
+          {loading ? (
+            <LoadingAnimation />
+          ) : (
+            <PatientList 
+              patients={currentPatients} 
+              selectedPatient={selectedPatient} 
+              onSelectPatient={handlePatientSelect}
+            />
+          )}
         </Box>
-
-            <Box className="main-content" >
-              <Animation/>
-            </Box>
         
-        {/* <Box className="main-content">
+        <Box className="main-content">
           {selectedPatient ? (
             <>
               <ConversationHeader patient={selectedPatient} />
@@ -205,6 +264,7 @@ function App() {
                 value={messageText} 
                 onChange={handleMessageChange} 
                 onSend={handleSendMessage} 
+                activeTab={activeTab}
               />
             </>
           ) : (
@@ -212,7 +272,7 @@ function App() {
               Please select your patient to start chatting.
             </Box>
           )}
-        </Box> */}
+        </Box>
       </Box>
     </ThemeProvider>
   );

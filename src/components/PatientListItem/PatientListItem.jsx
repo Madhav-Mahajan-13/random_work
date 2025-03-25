@@ -1,11 +1,10 @@
 import React from 'react';
-import { ListItem, ListItemAvatar, Avatar, ListItemText, Typography, Box, Badge } from '@mui/material';
+import { ListItem, ListItemAvatar, Avatar, ListItemText, Box, Badge } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import './PatientListItem.css';
+import dummyAvatar from  "../../assets/demo-profile.svg"
 
 const PatientListItem = ({ patient, isSelected, onClick }) => {
-  const defaultAvatar = patient.avatar || null;
-  
   return (
     <ListItem 
       button 
@@ -13,35 +12,27 @@ const PatientListItem = ({ patient, isSelected, onClick }) => {
       onClick={onClick}
     >
       <ListItemAvatar>
-        {defaultAvatar ? (
-          <Avatar src={defaultAvatar} alt={patient.name} className="patient-avatar" />
-        ) : (
-          <Avatar className="patient-avatar">
-            <img src="https://prtlimages.healtharc.io/images/icons/demo-profile.svg" alt="" width={"50px"} />
-          </Avatar>
-        )}
+        <Avatar className="patient-avatar">
+          {patient.avatar ? (
+            <img src={patient.avatar} alt={patient.name} />
+          ) : (
+            <img src={dummyAvatar} />
+          )}
+        </Avatar>
       </ListItemAvatar>
-      <ListItemText
-        primary={
-          <Typography component="span" variant="body1" className="patient-name">
-            {patient.name}
-          </Typography>
-        }
-        secondary={
-          patient.info ? (
-            <Typography component="span" variant="body2" className="patient-info">
-              {patient.info}
-            </Typography>
-          ) : null
-        }
+      <ListItemText 
+        primary={<span className="patient-name">{patient.name}</span>} 
+        secondary={<span className="patient-info">{patient.info}</span>} 
       />
       <Box className="patient-meta">
-        {patient.unread ? (
-          <Badge badgeContent={patient.unread} color="primary" className="unread-badge" />
-        ) : null}
-        <Typography variant="body2" className="patient-timestamp">
-          {patient.timestamp}
-        </Typography>
+        {patient.unread > 0 && (
+          <Badge 
+            color="error" 
+            badgeContent={patient.unread} 
+            className="unread-badge"
+          />
+        )}
+        <span className="patient-timestamp">{patient.timestamp}</span>
       </Box>
     </ListItem>
   );

@@ -37,10 +37,14 @@
   }
   
   .patient-timestamp {
+    position: absolute;
     color: #757575;
     font-size: 12px;
+    top:8px;
   }
   
   .unread-badge {
-    margin-bottom: 4px;
+    position: absolute;
+    /* margin-bottom: 4px; */
+    top:4px;
   }

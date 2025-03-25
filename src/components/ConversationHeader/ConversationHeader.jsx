@@ -1,32 +1,29 @@
 import React from 'react';
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, imageListClasses } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import './ConversationHeader.css';
-
+import dummyAvatar from "../../assets/demo-profile.svg"
 const ConversationHeader = ({ patient }) => {
-  const defaultAvatar = patient.avatar || null;
-  
   return (
     <Box className="conversation-header">
-      {defaultAvatar ? (
-        <Avatar src={defaultAvatar} alt={patient.name} className="conversation-avatar" />
-      ) : (
+      <Box className="conversation-user">
         <Avatar className="conversation-avatar">
-          <PersonIcon />
+          {patient.avatar ? (
+            <img src={patient.avatar} alt={patient.name} />
+          ) : (
+            <img src={dummyAvatar} alt="" />
+          )}
         </Avatar>
-      )}
-      <Box className="conversation-user-info">
-        <Typography variant="h6" className="conversation-user-name">
-          {patient.name}
+        <Typography variant="h6" className="conversation-name">
+          {patient.name} {patient.dob ? `(DOB - ${patient.dob})` : ''}
         </Typography>
-        {patient.dob && (
-          <Typography variant="body2" className="conversation-user-details">
-            (DOB - {patient.dob})
-          </Typography>
-        )}
       </Box>
+      <Typography variant="body2" className="conversation-status">
+        Unknown
+      </Typography>
     </Box>
   );
 };
 
 export default ConversationHeader;
+

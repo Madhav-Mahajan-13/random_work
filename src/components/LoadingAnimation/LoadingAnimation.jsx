@@ -1,5 +1,5 @@
 import React from 'react';
-import './Animation.css';
+import './LoadingAnimation.css';
 
 const Animation = () => {
   return (
