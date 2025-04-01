@@ -49,3 +49,39 @@
   font-size: 12px;
   color: #757575;
 }
+
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .message-input-wrapper {
+    padding: 8px;
+  }
+  
+  .message-field {
+    height: 42px;
+    padding: 8px 50px 8px 16px;
+    font-size: 13px;
+  }
+  
+  .send-button {
+    width: 42px;
+    height: 28px;
+    top: 7px;
+  }
+  
+  .send-button svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .character-counter {
+    font-size: 10px;
+    bottom: -18px;
+  }
+}
+
+/* Medium devices (tablets, 601px to 960px) */
+@media only screen and (min-width: 601px) and (max-width: 960px) {
+  .message-field {
+    height: 44px;
+  }
+}

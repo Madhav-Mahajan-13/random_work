@@ -11,22 +11,103 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  flex: 1;
+  min-width: 0; 
 }
 
 .conversation-avatar {
   width: 40px;
   height: 40px;
   background-color: #e0e0e0;
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.conversation-info {
+  min-width: 0; 
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.patient-details {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+/* For large screens - add space between name and DOB */
+@media only screen and (min-width: 961px) {
+  .patient-details {
+    gap: 8px; /* Space between NAME and DOB on large screens */
+  }
 }
 
 .conversation-name {
   font-size: 16px;
   font-weight: 500;
   color: #212121;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.patient-dob {
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .conversation-status {
   color: #6a994e;
   font-size: 16px;
   font-weight: 500;
+  margin-left: 12px;
+  flex-shrink: 0; /* Prevent status from shrinking */
+}
+
+.back-button {
+  margin-right: 8px;
+  flex-shrink: 0; /* Prevent back button from shrinking */
+}
+
+/* Medium devices (tablets, 960px and down) - Apply the stacked layout */
+@media only screen and (max-width: 960px) {
+  .patient-details {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  
+  .conversation-name {
+    font-size: 15px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+  
+  .patient-dob {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+}
+
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .conversation-header {
+    padding: 8px 12px;
+  }
+  
+  .conversation-name {
+    font-size: 14px;
+  }
+  
+  .patient-dob {
+    font-size: 12px;
+  }
+  
+  .conversation-status {
+    font-size: 14px;
+  }
 }

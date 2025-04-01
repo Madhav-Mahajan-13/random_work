@@ -1,0 +1,201 @@
+/* MetricCard.css */
+
+.metric-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.metric-card {
+  background: #fff 0 0 no-repeat padding-box;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px #66666633;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+  border: 1px solid #bce0ff;
+  height: 130px; /* Fixed height for consistency */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metric-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Linear progress styles */
+.linear-progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.linear-title {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.value-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 8px 0;
+}
+
+.primary-value {
+  font-size: 32px;
+  font-weight: 600;
+  color: #000;
+}
+
+.max-value {
+  font-size: 14px;
+  color: #777;
+  font-weight: 500;
+}
+
+.progress-bar-container {
+  height: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  background-color: #1976d2;
+  transition: width 0.3s ease;
+}
+
+/* Semi-circular progress styles */
+.semicircular-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  justify-content: center;
+}
+
+.semicircle-container {
+  position: relative;
+  width: 130px;
+  height: 65px;
+  overflow: hidden;
+}
+
+.semicircle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  border-radius: 50%;
+  background: transparent;
+  overflow: hidden;
+}
+
+.semicircle-background:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 12px solid #f0f0f0;
+  box-sizing: border-box;
+}
+
+.semicircle-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  border-radius: 50%;
+  background: transparent;
+  overflow: hidden;
+  transform-origin: center bottom;
+  transition: transform 0.3s ease;
+}
+
+.semicircle-progress:before,
+.semicircle-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  border-radius: 50%;
+  background: transparent;
+  overflow: hidden;
+  transform-origin: center bottom;
+  transition: transform 0.3s ease;
+  border: 12px solid;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+
+.semicircular-value {
+  font-size: 36px;
+  font-weight: 600;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+}
+
+.semicircular-title {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Dashboard layout for multiple cards */
+.metrics-dashboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Tablet: 3 in a row */
+@media (max-width: 1024px) {
+  .metrics-dashboard {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .metric-card {
+    height: 129px;
+  }
+}
+
+/* Mobile: 1 in a row */
+@media (max-width: 768px) {
+  .metrics-dashboard {
+    grid-template-columns: 1fr;
+  }
+  
+  .metric-card {
+    height: 129.5px;
+  }
+}
+
+/* Laptop and larger */
+@media (min-width: 1025px) {
+  .metric-card {
+    height: 139.6px;
+  }
+}

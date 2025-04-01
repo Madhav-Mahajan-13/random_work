@@ -1,50 +1,92 @@
 .patient-list-item {
-    padding: 12px 16px;
-    border-bottom: 1px solid #f0f0f0;
-  }
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
   
-  .selected-patient {
-    background-color: #e3f2fd !important;
+.selected-patient {
+  background-color: #e3f2fd !important;
+}
+  
+.patient-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+}
+  
+.patient-name {
+  font-weight: 500;
+  color: #212121;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+  
+.patient-info {
+  color: #757575;
+  font-size: 12px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+  
+.patient-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 50px;
+}
+  
+.patient-timestamp {
+  position: absolute;
+  color: #757575;
+  font-size: 12px;
+  top: 8px;
+}
+  
+.unread-badge {
+  position: absolute;
+  top: 4px;
+}
+
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .patient-list-item {
+    padding: 10px;
   }
   
   .patient-avatar {
-    width: 40px;
-    height: 40px;
-    background-color: #e0e0e0;
+    width: 36px;
+    height: 36px;
   }
   
   .patient-name {
-    font-weight: 500;
-    color: #212121;
-    display: block;
+    font-size: 14px;
   }
   
   .patient-info {
-    color: #757575;
-    font-size: 12px;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 180px;
-  }
-  
-  .patient-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    min-width: 50px;
+    font-size: 11px;
   }
   
   .patient-timestamp {
-    position: absolute;
-    color: #757575;
-    font-size: 12px;
-    top:8px;
+    font-size: 10px;
+  }
+}
+
+/* Medium devices (tablets, 601px to 960px) */
+@media only screen and (min-width: 601px) and (max-width: 960px) {
+  .patient-list-item {
+    padding: 12px;
   }
   
-  .unread-badge {
-    position: absolute;
-    /* margin-bottom: 4px; */
-    top:4px;
+  .patient-name {
+    max-width: 120px;
   }
+  
+  .patient-info {
+    max-width: 120px;
+  }
+}

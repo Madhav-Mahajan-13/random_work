@@ -22,7 +22,7 @@ const MessageInput = ({ value, onChange, onSend, activeTab }) => {
           placeholder="Enter your message here..."
           value={value}
           onChange={onChange}
-          onKeyPress={handleKeyPress}
+          onKeyUp={handleKeyPress}
           maxLength={maxCharacters}
         />
         <button 
@@ -46,4 +46,3 @@ const MessageInput = ({ value, onChange, onSend, activeTab }) => {
 
 export default MessageInput;
 
-// export default MessageInput;

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Box, Typography, Paper, Link, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EmptyConversation from '../EmptyConversation/EmptyCoversation';
 import './ConversationArea.css';
 
-const ConversationArea = ({ messages }) => {
+const ConversationArea = ({ messages = [] }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
+
+  const hasMessages = messages && messages.length > 0;
 
   const handleMenuOpen = (event, messageId) => {
     setAnchorEl(event.currentTarget);
@@ -22,16 +25,23 @@ const ConversationArea = ({ messages }) => {
     handleMenuClose();
   };
 
-  // Track displayed dates to avoid duplicates
+  if (!hasMessages) {
+    return (
+      <Box className="conversation-area">
+        <EmptyConversation />
+      </Box>
+    );
+  }
+
   const displayedDates = new Set();
 
   return (
     <Box className="conversation-area">
       {messages.map((message, index) => {
-        // Check if we should show a date divider
+        
         const showDateDivider = message.dateDivider && !displayedDates.has(message.dateDivider);
         
-        // If we're showing this date, add it to our tracked set
+        
         if (showDateDivider) {
           displayedDates.add(message.dateDivider);
         }
