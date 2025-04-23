@@ -1,28 +1,37 @@
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Message from "./pages/Message/Message";
-
+// import Orders from "./pages/Orders/Orders";
 import React from "react";
-import { createBrowserRouter,Route,RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ShopifyBuyButton from "./pages/Orders/Orders";
+import ShopifyProductWithSubscription from "./pages/Orders/shopify";
+import ShopifySubscriptionProduct from "./pages/Orders/ShopifySubscriptionProduct";
 
-const router =createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path:'/',
-    Element:<Dashboard/>
+    path: '/',
+    element: <Dashboard />
   },
   {
-    path:"/message",
-    Element:<Message/>
+    path: '/message',
+    element: <Message />
+  },
+  // {
+  //   path: '/',
+  //   element: <ShopifyBuyButton/>
+  // },
+  // {
+  //   path: '/shopify',
+  //   element: <ShopifyProductWithSubscription/>
+  // },
+  // {
+  //   path: '/products',
+  //   element: <ShopifySubscriptionProduct/>
+  // }
+]);
 
-  }
-])
 function App() {
-
-
-
-  return (
-    // <Dashboard/>
-    <Message/>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

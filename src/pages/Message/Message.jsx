@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Box, CssBaseline, IconButton, useMediaQuery } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Box, CssBaseline, useMediaQuery } from '@mui/material';
 import Header from '../../components/Header/Header';
 import TabsContainer from '../../components/TabsContainer/TabsContainer';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -11,6 +10,9 @@ import ConversationHeader from '../../components/ConversationHeader/Conversation
 import ConversationArea from '../../components/ConversationArea/ConversationArea';
 import MessageInput from '../../components/MessageInput/MessageInput';
 import LoadingAnimation from '../../components/LoadingAnimation/LoadingAnimation';
+// import Timer from '../../components/Timer/Timer'; 
+// import TimerFormatter from '../../components/Timer/TimerFormatter';
+import SimpleTimer from '../../components/Timer/SimpleTimer';
 import app_active from "../../assets/msg-cht.svg";
 import app_inactive from "../../assets/app_inactive.svg";
 import sms_active from "../../assets/sms_active.svg";
@@ -101,39 +103,47 @@ const smsPatients = [
 const messages = [
   {
     id: 1,
-    role: 'Care Coordinator',
-    content: 'What is your pain level? (Please answer on a scale of 0 to 10, where 0-2 is "No Pain", 3-7 is "Trouble" and 8-10 is "Unable To Move.")',
-    timestamp: '09:05 am'
+    content: "Yes Doctor, I have done the screen process and try to complete it.",
+    sender: "Michael Aiden",
+    role: "received",
+    timestamp: "05:55 pm",
+    isRead: true
   },
   {
     id: 2,
-    dateDivider: 'Mar 14,2025',
-    role: 'Care Coordinator',
-    content: 'Hi Lucilla, we are from Dev4 Hospital!',
-    timestamp: '09:05 am'
+    content: "Let's create something new and very use full that can helpful too and see then how we can get benefit from this.",
+    sender: "Care Coordinator",
+    role: "sent",
+    timestamp: "06:10 pm",
+    isRead: true
   },
   {
     id: 3,
-    role: 'Care Coordinator',
-    content: 'What is your pain level? (Please answer on a scale of 0 to 10, where 0-2 is "No Pain", 3-7 is "Trouble" and 8-10 is "Unable To Move.")',
-    timestamp: '09:05 am'
+    content: "Hello, Doctor",
+    sender: "Michael Aiden",
+    role: "received",
+    timestamp: "06:20 pm",
+    dateDivider: "Today",
+    isRead: true
   },
   {
     id: 4,
-    dateDivider: 'Mar 15,2025',
-    role: 'Care Coordinator',
-    content: 'sgjagbvjigavvavhvjkbsl',
-    timestamp: ''
+    content: "Have you received the files over the email",
+    sender: "Care Coordinator",
+    role: "sent",
+    timestamp: "06:22 pm",
+    isRead: true
   },
   {
     id: 5,
-    dateDivider: 'Mar 15,2025',
-    role: 'Care Coordinator',
-    content: 'sgjagbvjigavvavhvjkbsl',
-    timestamp: ''
-  },
-  
+    content: "Yeah! I already received and share to the concern section for review the report.",
+    sender: "Michael Aiden",
+    role: "received",
+    timestamp: "06:30 pm",
+    isRead: false
+  }
 ];
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -163,19 +173,17 @@ function Message() {
   const [searchText, setSearchText] = useState('');
   const [category, setCategory] = useState('RPM');
   const [messageText, setMessageText] = useState('');
-  const [timer, setTimer] = useState(0);
-  const [timerRunning, setTimerRunning] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentPatients, setCurrentPatients] = useState([]);
+  
+  // State for the timer
+  const [timerValue, setTimerValue] = useState(0);
+  const [timerActive, setTimerActive] = useState(false);
   
   // For mobile view
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [showSidebar, setShowSidebar] = useState(true);
   const [showMain, setShowMain] = useState(false);
-
-  // Calculate the total number of unread messages for the In-App counter
-  // const inAppUnreadCount = inAppPatients.reduce((total, patient) => 
-  //   total + (patient.unread || 0), 0);
 
   // Define tabs data
   const tabsData = [
@@ -199,24 +207,13 @@ function Message() {
     const loadData = async () => {
       setLoading(true);
       // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new (resolve => setTimeout(resolve, 3000));
       setCurrentPatients(activeTab === 0 ? inAppPatients : smsPatients);
       setLoading(false);
     };
     
     loadData();
   }, [activeTab]);
-
-  // Timer effect
-  useEffect(() => {
-    let interval;
-    if (timerRunning) {
-      interval = setInterval(() => {
-        setTimer(prevTimer => prevTimer + 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [timerRunning]);
 
   // Update view based on screen size and selection state
   useEffect(() => {
@@ -234,6 +231,11 @@ function Message() {
     }
   }, [selectedPatient, isMobile]);
 
+  // Handle timer updates from SimpleTimer component
+  const handleTimerUpdate = (seconds) => {
+    setTimerValue(seconds);
+  };
+
   // Format time as MM:SS
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -244,22 +246,17 @@ function Message() {
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
     setSelectedPatient(null);
-    setTimer(0);
-    setTimerRunning(false);
+    setTimerActive(false);
   };
 
   const handlePatientSelect = (patient) => {
-    // Reset timer when selecting a new patient
-    if (selectedPatient?.id !== patient.id) {
-      setTimer(0);
-    }
-    
     setSelectedPatient(patient);
-    setTimerRunning(true);
+    setTimerActive(true);
   };
 
   const handleBackToList = () => {
     setSelectedPatient(null);
+    setTimerActive(false);
   };
 
   const handleSearchChange = (event) => {
@@ -284,10 +281,17 @@ function Message() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {/* Only mount the timer component when active */}
+      {timerActive && (
+        <SimpleTimer 
+          isActive={timerActive}
+          onTimerUpdate={handleTimerUpdate}
+        />
+      )}
       <Box className="app-container">
         {showSidebar && (
           <Box className="sidebar">
-            <Header title="Messages" timer={timerRunning ? formatTime(timer) : "0 Sec"} />
+            <Header title="Messages" timer={timerActive ? formatTime(timerValue) : "0 Sec"} />
             <TabsContainer 
               activeTab={activeTab} 
               handleTabChange={handleTabChange}
@@ -338,5 +342,6 @@ function Message() {
     </ThemeProvider>
   );
 }
+
 
 export default Message;
